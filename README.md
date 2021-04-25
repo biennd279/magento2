@@ -18,6 +18,7 @@ chown -R :www-data .
 chmod u+x bin/magento
 
 bin/magento setup:install \
+    module:disable Magento_TwoFactorAuth \
   --base-url=http://localhost:8000 \
   --db-host=db \
   --db-name=magento2 \
@@ -35,4 +36,6 @@ bin/magento setup:install \
   --elasticsearch-host=elasticsearch \
   --elasticsearch-port=9200
 ```
-
+note: 
+Magento Admin URI: /admin_afow1d 
+Username/Password: admin/admin123 
