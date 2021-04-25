@@ -2,12 +2,13 @@
 
 ## Brief
 ## Requirement
+Docker and Docker compose
 ## Install
 Run step by step command
 ```bash
-docker-composer up -d
+docker-compose up -d
 
-docker-composer exec fpm sh
+docker-compose exec fpm sh
 
 composer install
 
@@ -15,7 +16,6 @@ find var generated vendor pub/static pub/media app/etc -type f -exec chmod g+w {
 find var generated vendor pub/static pub/media app/etc -type d -exec chmod g+ws {} +
 chown -R :www-data .
 chmod u+x bin/magento
-
 
 bin/magento setup:install \
   --base-url=http://localhost:8000 \
