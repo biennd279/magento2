@@ -39,7 +39,7 @@ services:
       - './.docker/generated:/var/www/html/generated'
       - './.docker/pub:/var/www/html/pub'
     ports:
-      - '8000:8000'
+      - '8000:80'
     depends_on:
       - db
       - fpm
