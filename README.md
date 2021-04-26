@@ -33,6 +33,9 @@ bin/magento setup:install \
   --timezone=America/New_York \
   --use-rewrites=1 \
   --elasticsearch-host=elasticsearch \
-  --elasticsearch-port=9200
+  --elasticsearch-port=9200 \
+  module:disable Magento_TwoFactorAuth 
 ```
-
+note: 
+Magento Admin URI: /admin_afow1d 
+Username/Password: admin/admin123 
