@@ -37,5 +37,6 @@ bin/magento setup:install \
 bin/magento module:disable Magento_TwoFactorAuth 
 ```
 ### Note 
-```Magento Admin URI: /admin_xxxx (random generated in last step)
+```
+Magento Admin URI: /admin_xxxx (random generated in last step)
 Username/Password: admin/admin123``` 
