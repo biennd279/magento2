@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<payment>
+			<simple>
+				<active>1</active>
+				<model>Dabilo\Payment\Model\Payment\Simple</model>
+				<order_status>pending</order_status>
+				<title>Simple</title>
+				<allowspecific>0</allowspecific>
+				<group>offline</group>
+			</simple>
+			<momo>
+				<active>1</active>
+				<model>Dabilo\Payment\Model\Payment\Momo</model>
+				<order_status>pending</order_status>
+				<title>Momo</title>
+				<allowspecific>0</allowspecific>
+				<group>offline</group>
+			</momo>
+			<zalopay>
+				<active>1</active>
+				<model>Dabilo\Payment\Model\Payment\Zalopay</model>
+				<order_status>pending</order_status>
+				<title>Zalopay</title>
+				<allowspecific>0</allowspecific>
+				<group>offline</group>
+			</zalopay>
+		</payment>
+	</default>
+</config>
