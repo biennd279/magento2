@@ -6,18 +6,18 @@
             </argument>
         </arguments>
     </type>
-    <type name="Dabilo\Payment\Controller\Payment\Start">
+    <type name="Dabilo\Payment\Controller\Momo\Start">
         <arguments>
             <argument name="commandPool" xsi:type="object">MomoCommandPool</argument>
         </arguments>
     </type>
-    <type name="Dabilo\Payment\Controller\Payment\ReturnAction">
+    <type name="Dabilo\Payment\Controller\Momo\ReturnAction">
         <arguments>
             <argument name="commandPool" xsi:type="object">MomoCommandPool</argument>
             <argument name="method" xsi:type="object">MomoFacade</argument>
         </arguments>
     </type>
-    <type name="Dabilo\Payment\Controller\Payment\Ipn">
+    <type name="Dabilo\Payment\Controller\Momo\Ipn">
         <arguments>
             <argument name="commandPool" xsi:type="object">MomoCommandPool</argument>
             <argument name="method" xsi:type="object">MomoFacade</argument>

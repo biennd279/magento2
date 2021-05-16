@@ -45,7 +45,7 @@ class MomoConfigProvider implements ConfigProviderInterface
         return [
           "payment" => [
               "momo" => [
-                  "redirectUrl" => $this->urlBuilder->getUrl("momo/payment/start"),
+                  "redirectUrl" => $this->urlBuilder->getUrl("payment/momo/start"),
                   "logoSrc" => self::MOMO_LOGO_SRC,
               ]
           ]
