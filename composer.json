@@ -12,6 +12,7 @@
     },
     "version": "2.4.2",
     "require": {
+        "larapack/dd": "1.*",
         "magento/composer-root-update-plugin": "~1.1",
         "magento/module-bundle-sample-data": "100.4.*",
         "magento/module-catalog-rule-sample-data": "100.4.*",

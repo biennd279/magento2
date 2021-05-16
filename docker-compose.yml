@@ -23,7 +23,7 @@ services:
     build:
       context: .
     volumes:
-      - '.:/var/www/html'
+      - './:/var/www/html'
       - './.docker/vendor:/var/www/html/vendor'
       - './.docker/generated:/var/www/html/generated'
       - './.docker/pub:/var/www/html/pub'
@@ -33,7 +33,7 @@ services:
     env_file:
       - .env
     volumes:
-      - '.:/var/www/html'
+      - './:/var/www/html'
       - './nginx.conf:/etc/nginx/conf.d/default.conf'
       - './.docker/vendor:/var/www/html/vendor'
       - './.docker/generated:/var/www/html/generated'

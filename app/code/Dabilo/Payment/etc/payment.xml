@@ -6,9 +6,6 @@
 		</group>
 	</groups>
 	<methods>
-		<method name="simple">
-			<allow_multiple_address>1</allow_multiple_address>
-		</method>
 		<method name="momo">
 			<allow_multiple_address>1</allow_multiple_address>
 		</method>
