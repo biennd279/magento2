@@ -188,3 +188,7 @@ fabric.properties
 vendor/*
 generated/*
 
+
+xdebug/xdebug.log
+
+xdebug/
