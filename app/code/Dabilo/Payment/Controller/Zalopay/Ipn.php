@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Dabilo\Payment\Controller\Momo;
+namespace Dabilo\Payment\Controller\Zalopay;
 
 
-use Dabilo\Payment\Gateway\Momo\Helper\TransactionReader;
+use Dabilo\Payment\Gateway\Zalopay\Helper\TransactionReader;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
@@ -14,20 +14,22 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\Controller\ResultInterface;
 use Magento\Payment\Gateway\Command\CommandPoolInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectFactory;
 use Magento\Payment\Gateway\Helper\ContextHelper;
 use Magento\Payment\Model\MethodInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Sales\Model\OrderFactory;
+use Magento\Framework\Serialize\Serializer\Json as SerializerJson;
+use Magento\Sales\Model\Order;
+
 
 class Ipn extends Action implements CsrfAwareActionInterface
 {
     /**
      * @var CommandPoolInterface
      */
-    private CommandPoolInterface $commandPool;
+    private $commandPool;
 
     /**
      * @var Session
@@ -47,11 +49,17 @@ class Ipn extends Action implements CsrfAwareActionInterface
     /**
      * @var PaymentDataObjectFactory
      */
-    private PaymentDataObjectFactory $paymentDataObjectFactory;
+    private $paymentDataObjectFactory;
+
     /**
      * @var OrderFactory
      */
     private $orderFactory;
+
+    /**
+     * @var SerializerJson
+     */
+    private $serializer;
 
     /**
      * Ipn constructor.
@@ -62,6 +70,7 @@ class Ipn extends Action implements CsrfAwareActionInterface
      * @param PaymentDataObjectFactory $paymentDataObjectFactory
      * @param OrderRepositoryInterface $orderRepository
      * @param OrderFactory             $orderFactory
+     * @param SerializerJson           $serializer
      * @param CommandPoolInterface     $commandPool
      */
     public function __construct(
@@ -71,6 +80,7 @@ class Ipn extends Action implements CsrfAwareActionInterface
         PaymentDataObjectFactory $paymentDataObjectFactory,
         OrderRepositoryInterface $orderRepository,
         OrderFactory $orderFactory,
+        SerializerJson $serializer,
         CommandPoolInterface $commandPool
     ) {
         parent::__construct($context);
@@ -80,10 +90,11 @@ class Ipn extends Action implements CsrfAwareActionInterface
         $this->method                   = $method;
         $this->paymentDataObjectFactory = $paymentDataObjectFactory;
         $this->orderFactory             = $orderFactory;
+        $this->serializer               = $serializer;
     }
 
     /**
-     * @return ResponseInterface|Json|ResultInterface|void
+     * @return ResponseInterface|Json|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
@@ -92,17 +103,22 @@ class Ipn extends Action implements CsrfAwareActionInterface
         }
         /** @var Json $resultJson */
         $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
-        $data = [
+        $data       = [
             'errors' => true,
             'messages' => __('Something went wrong white execute.')
         ];
         try {
-            $response = $this->getRequest()->getPostValue();
+            $response = $this->getRequest()->getContent();
+            if ($response && is_string($response)) {
+                $response               = $this->serializer->unserialize($response);
+                $response['trans_data'] = $this->serializer->unserialize($response['data']);
+            }
             $orderIncrementId = TransactionReader::readOrderId($response);
-            $order  = $this->orderFactory->create()->loadByIncrementId($orderIncrementId);
-            $payment = $order->getPayment();
+            $order            = $this->orderFactory->create()->loadByIncrementId($orderIncrementId);
+            $payment          = $order->getPayment();
             ContextHelper::assertOrderPayment($payment);
-            if ($payment->getMethod() === $this->method->getCode()) {
+            if ($payment->getMethod() === $this->method->getCode()
+                && $order->getState() === Order::STATE_PENDING_PAYMENT) {
                 $paymentDataObject = $this->paymentDataObjectFactory->create($payment);
                 $this->commandPool->get('ipn')->execute(
                     [

@@ -28,6 +28,7 @@ services:
       - './.docker/generated:/var/www/html/generated'
       - './.docker/pub:/var/www/html/pub'
       - './.docker/mnt:/mnt'
+      - './.docker/xdebug:/var/log/xdebug'
   web:
     image: 'nginx:1.20.0-alpine'
     env_file:

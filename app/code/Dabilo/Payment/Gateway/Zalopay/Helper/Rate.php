@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Dabilo\Payment\Gateway\Momo\Helper;
+namespace Dabilo\Payment\Gateway\Zalopay\Helper;
 
 
 use Magento\Directory\Helper\Data;
@@ -9,12 +9,13 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Sales\Model\Order;
 use Magento\Store\Model\StoreManagerInterface;
+use Dabilo\Payment\Gateway\Zalopay\Requests\AbstractDataBuilder;
 
 class Rate
 {
     /**
- * Vietnam dong currency
- */
+     * Vietnam dong currency
+     */
     const CURRENCY_CODE = 'VND';
 
     /**
@@ -30,7 +31,8 @@ class Rate
     /**
      * OrderDetailsDataBuilder constructor.
      *
-     * @param Data $helperData
+     * @param ConfigInterface       $config
+     * @param Data                  $helperData
      * @param StoreManagerInterface $storeManager
      */
     public function __construct(
@@ -42,7 +44,7 @@ class Rate
     }
 
     /**
-     * @param Order $order
+     * @param Order  $order
      * @param $amount
      * @return string
      * @throws NoSuchEntityException
@@ -75,5 +77,5 @@ class Rate
     {
         return $order->getOrderCurrencyCode() === self::CURRENCY_CODE;
     }
-
 }
+
