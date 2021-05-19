@@ -30,4 +30,29 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="zalopay_wallet_config_provider" xsi:type="object">Dabilo\Payment\Model\ZaloPayConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Dabilo\Payment\Controller\Zalopay\Start">
+        <arguments>
+            <argument name="commandPool" xsi:type="object">ZaloPayCommandPool</argument>
+        </arguments>
+    </type>
+    <type name="Dabilo\Payment\Controller\Zalopay\ReturnAction">
+        <arguments>
+            <argument name="commandPool" xsi:type="object">ZaloPayCommandPool</argument>
+            <argument name="method" xsi:type="object">ZaloPayFacade</argument>
+        </arguments>
+    </type>
+    <type name="Dabilo\Payment\Controller\Zalopay\Ipn">
+        <arguments>
+            <argument name="commandPool" xsi:type="object">ZaloPayCommandPool</argument>
+            <argument name="method" xsi:type="object">ZaloPayFacade</argument>
+        </arguments>
+    </type>
 </config>

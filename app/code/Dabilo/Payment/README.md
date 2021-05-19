@@ -1,6 +1,6 @@
 # Mage2 Module Dabilo Payment
 
-    ``dabilo/module-payment``
+   ```dabilo/module-payment```
 
  - [Main Functionalities](#markdown-header-main-functionalities)
  - [Installation](#markdown-header-installation)
@@ -37,17 +37,12 @@ Create for momo payment method.
 
 ## Configuration
 
- - Simple - payment/simple/*
-
  - Momo - payment/momo/*
 
  - Zalopay - payment/zalopay/*
 
 
 ## Specifications
-
- - Payment Method
-	- Simple
 
  - Payment Method
 	- Momo
@@ -58,5 +53,10 @@ Create for momo payment method.
 
 ## Attributes
 
+## Base Source code
 
+Thanks for [thaopw](https://github.com/thaopw) and [mrkhoa99](https://github.com/mrkhoa99)
+contribute two repository use as base code in this repository
+[Boolfly ZaloPay Wallet for Magento 2](https://github.com/boolfly/zalopay) and
+[Momo Payment for Magento 2](https://github.com/boolfly/momo-wallet)
 
