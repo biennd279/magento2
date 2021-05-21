@@ -1,6 +1,6 @@
 <?php
 
-namespace  \Dabilo\MiniWindow\Model;
+namespace  Dabilo\MiniWindow\Model;
 
 
 use Magento\Framework\App\Request\Http;
