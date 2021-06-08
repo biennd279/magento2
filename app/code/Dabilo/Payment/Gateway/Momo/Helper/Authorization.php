@@ -3,10 +3,10 @@
 
 namespace Dabilo\Payment\Gateway\Momo\Helper;
 
+use Dabilo\Payment\Gateway\Momo\Requests\AbstractDataBuilder;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Payment\Gateway\ConfigInterface;
-use Dabilo\Payment\Gateway\Momo\Requests\AbstractDataBuilder;
 
 
 class Authorization
@@ -38,17 +38,18 @@ class Authorization
 
     /**
      * Authorization constructor.
-     * @param DateTime        $dateTime
-     * @param Json            $serializer
+     * @param DateTime $dateTime
+     * @param Json $serializer
      * @param ConfigInterface $config
      */
     public function __construct(
         DateTime $dateTime,
         Json $serializer,
         ConfigInterface $config
-    ) {
-        $this->dateTime   = $dateTime;
-        $this->config     = $config;
+    )
+    {
+        $this->dateTime = $dateTime;
+        $this->config = $config;
         $this->serializer = $serializer;
     }
 
@@ -60,9 +61,9 @@ class Authorization
      */
     public function setParameter($params)
     {
-        $params                                  = array_replace_recursive($params, $this->getPartnerInfo());
+        $params = array_replace_recursive($params, $this->getPartnerInfo());
         $params[AbstractDataBuilder::REQUEST_ID] = $this->getTimestamp();
-        $newParams                               = [];
+        $newParams = [];
         foreach ($this->getSignatureData() as $key) {
             if (!empty($params[$key])) {
                 $newParams[$key] = $params[$key];
@@ -82,14 +83,42 @@ class Authorization
     }
 
     /**
-     * Signature
-     *
-     * @param $params
+     * @return array
+     */
+    private function getPartnerInfo()
+    {
+        return [
+            AbstractDataBuilder::PARTNER_CODE => $this->getPartnerCode(),
+            AbstractDataBuilder::ACCESS_KEY => $this->getAccessKey()
+        ];
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getPartnerCode()
+    {
+        return $this->config->getValue('partner_code');
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getAccessKey()
+    {
+        return $this->config->getValue('access_key');
+    }
+
+    /**
      * @return string
      */
-    public function getSignature($params)
+    private function getTimestamp()
     {
-        return hash_hmac('sha256', urldecode(http_build_query($params)), $this->getSecretKey());
+        if ($this->timestamp === null) {
+            $this->timestamp = (string)($this->dateTime->gmtTimestamp() * 1000);
+        }
+
+        return $this->timestamp;
     }
 
     /**
@@ -112,22 +141,22 @@ class Authorization
     }
 
     /**
+     * Signature
+     *
+     * @param $params
      * @return string
      */
-    public function getParameter()
+    public function getSignature($params)
     {
-        return $this->params;
+        return hash_hmac('sha256', urldecode(http_build_query($params)), $this->getSecretKey());
     }
 
     /**
-     * @return array
+     * @return mixed
      */
-    private function getPartnerInfo()
+    private function getSecretKey()
     {
-        return [
-            AbstractDataBuilder::PARTNER_CODE => $this->getPartnerCode(),
-            AbstractDataBuilder::ACCESS_KEY => $this->getAccessKey()
-        ];
+        return $this->config->getValue('secret_key');
     }
 
     /**
@@ -146,36 +175,8 @@ class Authorization
     /**
      * @return string
      */
-    private function getTimestamp()
+    public function getParameter()
     {
-        if ($this->timestamp === null) {
-            $this->timestamp = (string)($this->dateTime->gmtTimestamp() * 1000);
-        }
-
-        return $this->timestamp;
-    }
-
-    /**
-     * @return mixed
-     */
-    private function getAccessKey()
-    {
-        return $this->config->getValue('access_key');
-    }
-
-    /**
-     * @return mixed
-     */
-    private function getSecretKey()
-    {
-        return $this->config->getValue('secret_key');
-    }
-
-    /**
-     * @return mixed
-     */
-    private function getPartnerCode()
-    {
-        return $this->config->getValue('partner_code');
+        return $this->params;
     }
 }

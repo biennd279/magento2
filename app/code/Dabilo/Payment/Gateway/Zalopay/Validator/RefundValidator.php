@@ -15,7 +15,7 @@ class RefundValidator extends AbstractResponseValidator
      */
     public function validate(array $validationSubject): ResultInterface
     {
-        $response      = SubjectReader::readResponse($validationSubject);
+        $response = SubjectReader::readResponse($validationSubject);
         $errorMessages = [];
 
         $validationResult = $this->validateRefundId($response)
@@ -42,7 +42,7 @@ class RefundValidator extends AbstractResponseValidator
      * @param array $response
      * @return boolean
      */
-    protected function validateReturnCode(array $response) : bool
+    protected function validateReturnCode(array $response): bool
     {
         return isset($response[self::RETURN_CODE])
             && ((string)$response[self::RETURN_CODE] === (string)self::RETURN_CODE_ACCEPT

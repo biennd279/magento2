@@ -47,11 +47,11 @@ class GetPayUrlCommand implements CommandInterface
     /**
      * Constructor
      *
-     * @param BuilderInterface         $requestBuilder
+     * @param BuilderInterface $requestBuilder
      * @param TransferFactoryInterface $transferFactory
-     * @param ClientInterface          $client
-     * @param ArrayResultFactory       $resultFactory
-     * @param ValidatorInterface       $validator
+     * @param ClientInterface $client
+     * @param ArrayResultFactory $resultFactory
+     * @param ValidatorInterface $validator
      */
     public function __construct(
         BuilderInterface $requestBuilder,
@@ -59,7 +59,8 @@ class GetPayUrlCommand implements CommandInterface
         ClientInterface $client,
         ArrayResultFactory $resultFactory,
         ValidatorInterface $validator
-    ) {
+    )
+    {
         $this->requestBuilder = $requestBuilder;
         $this->transferFactory = $transferFactory;
         $this->client = $client;

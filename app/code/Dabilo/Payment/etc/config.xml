@@ -1,17 +1,18 @@
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <payment>
             <momo>
                 <active>1</active>
                 <model>MomoFacade</model>
-<!--                <model>Dabilo\Payment\Model\Payment\Momo</model>-->
+                <!--                <model>Dabilo\Payment\Model\Payment\Momo</model>-->
                 <access_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
                 <secret_key backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
                 <sandbox_flag>1</sandbox_flag>
                 <order_status>pending</order_status>
                 <title>Momo</title>
                 <allowspecific>0</allowspecific>
-<!--                <specificcountry>VN</specificcountry>-->
+                <!--                <specificcountry>VN</specificcountry>-->
                 <merchant_name>Momo Partner</merchant_name>
                 <credit_memo_prefix>MEMO-</credit_memo_prefix>
                 <payment_action>authorize_capture</payment_action>
@@ -29,7 +30,8 @@
                 <can_use_checkout>1</can_use_checkout>
                 <is_gateway>1</is_gateway>
                 <debugReplaceKeys>partnerCode,accessKey</debugReplaceKeys>
-                <paymentInfoKeys>transaction_type,transaction_id,response_code,fraud_messages,approve_messages</paymentInfoKeys>
+                <paymentInfoKeys>transaction_type,transaction_id,response_code,fraud_messages,approve_messages
+                </paymentInfoKeys>
             </momo>
             <zalopay>
                 <active>1</active>
@@ -57,7 +59,8 @@
                 <can_use_checkout>1</can_use_checkout>
                 <is_gateway>1</is_gateway>
                 <debugReplaceKeys>key_1,key_2</debugReplaceKeys>
-                <paymentInfoKeys>transaction_type,transaction_id,response_code,fraud_messages,approve_messages</paymentInfoKeys>
+                <paymentInfoKeys>transaction_type,transaction_id,response_code,fraud_messages,approve_messages
+                </paymentInfoKeys>
             </zalopay>
         </payment>
     </default>

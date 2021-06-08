@@ -42,7 +42,8 @@ class OrderAdditionalInformationDataBuilder extends AbstractDataBuilder implemen
     public function __construct(
         Json $serializer,
         Rate $helperRate
-    ) {
+    )
+    {
         $this->serializer = $serializer;
         $this->helperRate = $helperRate;
     }
@@ -56,11 +57,11 @@ class OrderAdditionalInformationDataBuilder extends AbstractDataBuilder implemen
     public function build(array $buildSubject)
     {
         $payment = SubjectReader::readPayment($buildSubject);
-        $order   = $payment->getPayment()->getOrder();
+        $order = $payment->getPayment()->getOrder();
 
         return [
             self::EMBED_DATA => $this->serializer->serialize($this->getEmbedData()),
-            self::AMOUNT => (int) $this->helperRate->getVndAmount($order, round((float)SubjectReader::readAmount($buildSubject), 2)),
+            self::AMOUNT => (int)$this->helperRate->getVndAmount($order, round((float)SubjectReader::readAmount($buildSubject), 2)),
             self::DESCRIPTION => self::DESCRIPTION_TEXT,
             self::BANK_CODE => self::ZALOPAY_APP
         ];

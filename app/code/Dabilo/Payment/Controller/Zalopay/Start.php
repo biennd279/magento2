@@ -4,19 +4,23 @@
 namespace Dabilo\Payment\Controller\Zalopay;
 
 use Dabilo\Payment\Gateway\Zalopay\Helper\TransactionReader;
-use Magento\Framework\App\Action\Action;
+use Exception;
 use Magento\Checkout\Model\Session;
+use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Session\SessionManager;
 use Magento\Payment\Gateway\Command\CommandPoolInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectFactory;
 use Magento\Payment\Gateway\Helper\ContextHelper;
+use Magento\Quote\Api\CartManagementInterface;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Sales\Api\PaymentFailuresInterface;
+use Magento\Sales\Model\Order;
 use Psr\Log\LoggerInterface;
-use Magento\Quote\Api\CartManagementInterface;
+
 class Start extends Action
 {
     /**
@@ -67,15 +71,15 @@ class Start extends Action
     /**
      * Start constructor.
      *
-     * @param Context                       $context
-     * @param CommandPoolInterface          $commandPool
-     * @param LoggerInterface               $logger
-     * @param OrderRepositoryInterface      $orderRepository
-     * @param PaymentDataObjectFactory      $paymentDataObjectFactory
-     * @param Session                       $checkoutSession
-     * @param CartRepositoryInterface       $quoteRepository
-     * @param SessionManager                $sessionManager
-     * @param CartManagementInterface       $cartManagement
+     * @param Context $context
+     * @param CommandPoolInterface $commandPool
+     * @param LoggerInterface $logger
+     * @param OrderRepositoryInterface $orderRepository
+     * @param PaymentDataObjectFactory $paymentDataObjectFactory
+     * @param Session $checkoutSession
+     * @param CartRepositoryInterface $quoteRepository
+     * @param SessionManager $sessionManager
+     * @param CartManagementInterface $cartManagement
      * @param PaymentFailuresInterface|null $paymentFailures
      */
     public function __construct(
@@ -89,29 +93,30 @@ class Start extends Action
         SessionManager $sessionManager,
         CartManagementInterface $cartManagement,
         PaymentFailuresInterface $paymentFailures = null
-    ) {
+    )
+    {
         parent::__construct($context);
-        $this->commandPool              = $commandPool;
-        $this->logger                   = $logger;
-        $this->quoteRepository          = $quoteRepository;
+        $this->commandPool = $commandPool;
+        $this->logger = $logger;
+        $this->quoteRepository = $quoteRepository;
         $this->paymentDataObjectFactory = $paymentDataObjectFactory;
-        $this->checkoutSession          = $checkoutSession;
-        $this->sessionManager           = $sessionManager;
-        $this->paymentFailures          = $paymentFailures ?: $this->_objectManager->get(PaymentFailuresInterface::class);
-        $this->cartManagement           = $cartManagement;
-        $this->orderRepository          = $orderRepository;
+        $this->checkoutSession = $checkoutSession;
+        $this->sessionManager = $sessionManager;
+        $this->paymentFailures = $paymentFailures ?: $this->_objectManager->get(PaymentFailuresInterface::class);
+        $this->cartManagement = $cartManagement;
+        $this->orderRepository = $orderRepository;
     }
 
     /**
-     * @return \Magento\Framework\App\ResponseInterface|ResultInterface|void
+     * @return ResponseInterface|ResultInterface|void
      */
     public function execute()
     {
         try {
             $orderId = $this->checkoutSession->getLastOrderId();
             if ($orderId) {
-                /** @var \Magento\Sales\Model\Order $order */
-                $order   = $this->orderRepository->get($orderId);
+                /** @var Order $order */
+                $order = $this->orderRepository->get($orderId);
                 $payment = $order->getPayment();
                 ContextHelper::assertOrderPayment($payment);
                 $paymentDataObject = $this->paymentDataObjectFactory->create($payment);
@@ -127,7 +132,7 @@ class Start extends Action
                     $this->getResponse()->setRedirect($payUrl);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->paymentFailures->handle((int)$this->checkoutSession->getLastQuoteId(), $e->getMessage());
             $this->logger->critical($e);
 

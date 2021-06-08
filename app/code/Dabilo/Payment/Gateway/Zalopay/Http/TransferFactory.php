@@ -27,7 +27,7 @@ class TransferFactory extends AbstractTransferFactory
     private function getUrl()
     {
         $prefix = $this->isSandboxMode() ? 'sandbox_' : '';
-        $path   = $prefix . 'payment_url';
+        $path = $prefix . 'payment_url';
 
         return rtrim($this->config->getValue($path), '/') . '/' . $this->urlPath;
     }

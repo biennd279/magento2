@@ -21,7 +21,8 @@ class ReturnNotifyUrlDataBuilder extends AbstractDataBuilder implements BuilderI
      */
     public function __construct(
         UrlInterface $urlBuilder
-    ) {
+    )
+    {
         $this->urlBuilder = $urlBuilder;
     }
 

@@ -4,6 +4,7 @@
 namespace Dabilo\Payment\Gateway\Momo\Http\Converter;
 
 
+use Exception;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Payment\Gateway\Http\ConverterException;
 use Magento\Payment\Gateway\Http\ConverterInterface;
@@ -24,14 +25,15 @@ class JsonToArray implements ConverterInterface
     /**
      * JsonToArray constructor.
      *
-     * @param Json            $serializer
+     * @param Json $serializer
      * @param LoggerInterface $logger
      */
     public function __construct(
         Json $serializer,
         LoggerInterface $logger
-    ) {
-        $this->logger     = $logger;
+    )
+    {
+        $this->logger = $logger;
         $this->serializer = $serializer;
     }
 
@@ -46,7 +48,7 @@ class JsonToArray implements ConverterInterface
     {
         try {
             return $this->serializer->unserialize($response);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->critical('Can\'t read response from Momo');
             throw new ConverterException(__('Can\'t read response from Mo'));
         }

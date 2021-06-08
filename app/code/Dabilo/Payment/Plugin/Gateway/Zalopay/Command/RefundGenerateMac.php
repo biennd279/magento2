@@ -22,7 +22,8 @@ class RefundGenerateMac
      */
     public function __construct(
         Authorization $authorization
-    ) {
+    )
+    {
         $this->authorization = $authorization;
     }
 

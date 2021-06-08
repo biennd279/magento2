@@ -1,55 +1,54 @@
 # Mage2 Module Dabilo Payment
 
-   ```dabilo/module-payment```
+```dabilo/module-payment```
 
- - [Main Functionalities](#markdown-header-main-functionalities)
- - [Installation](#markdown-header-installation)
- - [Configuration](#markdown-header-configuration)
- - [Specifications](#markdown-header-specifications)
- - [Attributes](#markdown-header-attributes)
-
+- [Main Functionalities](#markdown-header-main-functionalities)
+- [Installation](#markdown-header-installation)
+- [Configuration](#markdown-header-configuration)
+- [Specifications](#markdown-header-specifications)
+- [Attributes](#markdown-header-attributes)
 
 ## Main Functionalities
+
 Create for momo payment method.
 
 ## Installation
+
 \* = in production please use the `--keep-generated` option
 
 ### Type 1: Zip file
 
- - Unzip the zip file in `app/code/Dabilo`
- - Enable the module by running `php bin/magento module:enable Dabilo_Payment`
- - Apply database updates by running `php bin/magento setup:upgrade`\*
- - Flush the cache by running `php bin/magento cache:flush`
+- Unzip the zip file in `app/code/Dabilo`
+- Enable the module by running `php bin/magento module:enable Dabilo_Payment`
+- Apply database updates by running `php bin/magento setup:upgrade`\*
+- Flush the cache by running `php bin/magento cache:flush`
 
 ### Type 2: Composer
 
- - Make the module available in a composer repository for example:
+- Make the module available in a composer repository for example:
     - private repository `repo.magento.com`
     - public repository `packagist.org`
     - public github repository as vcs
- - Add the composer repository to the configuration by running `composer config repositories.repo.magento.com composer https://repo.magento.com/`
- - Install the module composer by running `composer require dabilo/module-payment`
- - enable the module by running `php bin/magento module:enable Dabilo_Payment`
- - apply database updates by running `php bin/magento setup:upgrade`\*
- - Flush the cache by running `php bin/magento cache:flush`
-
+- Add the composer repository to the configuration by
+  running `composer config repositories.repo.magento.com composer https://repo.magento.com/`
+- Install the module composer by running `composer require dabilo/module-payment`
+- enable the module by running `php bin/magento module:enable Dabilo_Payment`
+- apply database updates by running `php bin/magento setup:upgrade`\*
+- Flush the cache by running `php bin/magento cache:flush`
 
 ## Configuration
 
- - Momo - payment/momo/*
+- Momo - payment/momo/*
 
- - Zalopay - payment/zalopay/*
-
+- Zalopay - payment/zalopay/*
 
 ## Specifications
 
- - Payment Method
-	- Momo
+- Payment Method
+    - Momo
 
- - Payment Method
-	- Zalopay
-
+- Payment Method
+    - Zalopay
 
 ## Attributes
 

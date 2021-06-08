@@ -10,7 +10,6 @@ use Magento\Payment\Gateway\Helper\ContextHelper;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
-use Magento\Payment\Gateway\Command\ResultInterface;
 use Magento\Sales\Model\Order\Payment;
 
 class UpdateDetailsCommand implements CommandInterface
@@ -29,14 +28,15 @@ class UpdateDetailsCommand implements CommandInterface
      * UpdateDetailsCommand constructor.
      *
      * @param ValidatorInterface $validator
-     * @param HandlerInterface   $handler
+     * @param HandlerInterface $handler
      */
     public function __construct(
         ValidatorInterface $validator,
         HandlerInterface $handler
-    ) {
+    )
+    {
         $this->validator = $validator;
-        $this->handler   = $handler;
+        $this->handler = $handler;
     }
 
     /**

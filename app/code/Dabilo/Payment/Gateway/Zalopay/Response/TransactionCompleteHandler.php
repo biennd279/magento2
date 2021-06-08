@@ -5,9 +5,9 @@ namespace Dabilo\Payment\Gateway\Zalopay\Response;
 
 use Dabilo\Payment\Gateway\Zalopay\Validator\AbstractResponseValidator;
 use Magento\Framework\Exception\LocalizedException as LocalizedExceptionAlias;
-use Magento\Sales\Model\Order\Payment;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Payment\Gateway\Response\HandlerInterface;
+use Magento\Sales\Model\Order\Payment;
 
 class TransactionCompleteHandler implements HandlerInterface
 {

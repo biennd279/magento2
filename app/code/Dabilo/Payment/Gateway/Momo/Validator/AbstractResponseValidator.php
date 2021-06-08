@@ -84,16 +84,12 @@ abstract class AbstractResponseValidator extends AbstractValidator
         ResultInterfaceFactory $resultFactory,
         Authorization $authorization,
         Rate $helperRate
-    ) {
+    )
+    {
         parent::__construct($resultFactory);
-        $this->helperRate    = $helperRate;
+        $this->helperRate = $helperRate;
         $this->authorization = $authorization;
     }
-
-    /**
-     * @return array
-     */
-    abstract protected function getSignatureArray(): array;
 
     /**
      * @param array $response
@@ -132,9 +128,14 @@ abstract class AbstractResponseValidator extends AbstractValidator
         $signature = $this->authorization->getSignature($newParams);
         if (!empty($response[AbstractDataBuilder::SIGNATURE])
             && $response[AbstractDataBuilder::SIGNATURE] === $signature) {
-            return  true;
+            return true;
         }
 
         return false;
     }
+
+    /**
+     * @return array
+     */
+    abstract protected function getSignatureArray(): array;
 }

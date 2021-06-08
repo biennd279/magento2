@@ -3,24 +3,26 @@
 namespace Dabilo\MiniWindow\Block;
 
 
+use Dabilo\MiniWindow\Model\Currency;
+use Dabilo\MiniWindow\Model\CurrencyFactory;
 use Magento\Framework\View\Element\Template;
 
-class CurrencyBlock extends \Magento\Framework\View\Element\Template
+class CurrencyBlock extends Template
 {
     /**
-     * @var \Dabilo\MiniWindow\Model\CurrencyFactory
+     * @var CurrencyFactory
      */
     private $CurrencyFactory;
 
     /**
      * CurrencyBlock constructor.
      * @param Template\Context $context
-     * @param \Dabilo\MiniWindow\Model\CurrencyFactory $CurrencyFactory
+     * @param CurrencyFactory $CurrencyFactory
      * @param array $data
      */
     public function __construct(
         Template\Context $context,
-        \Dabilo\MiniWindow\Model\CurrencyFactory $CurrencyFactory,
+        CurrencyFactory $CurrencyFactory,
         array $data = []
     )
     {
@@ -29,7 +31,7 @@ class CurrencyBlock extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return \Dabilo\MiniWindow\Model\Currency[]
+     * @return Currency[]
      */
     public function getCurrencyInformation()
     {

@@ -25,7 +25,8 @@ class TransactionDataBuilder extends AbstractDataBuilder implements BuilderInter
      */
     public function __construct(
         $requestType
-    ) {
+    )
+    {
         $this->requestType = $requestType;
     }
 

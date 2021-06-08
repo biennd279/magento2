@@ -3,11 +3,11 @@
 
 namespace Dabilo\Payment\Gateway\Zalopay\Command;
 
+use Magento\Payment\Gateway\CommandInterface;
 use Magento\Payment\Gateway\Helper\ContextHelper;
 use Magento\Payment\Gateway\Helper\SubjectReader;
-use Magento\Sales\Model\Order;
 use Magento\Sales\Api\Data\OrderInterface;
-use Magento\Payment\Gateway\CommandInterface;
+use Magento\Sales\Model\Order;
 use Magento\Sales\Model\Order\Payment;
 
 class InitializeCommand implements CommandInterface
@@ -18,7 +18,7 @@ class InitializeCommand implements CommandInterface
     public function execute(array $commandSubject)
     {
         $stateObject = SubjectReader::readStateObject($commandSubject);
-        $paymentDO   = SubjectReader::readPayment($commandSubject);
+        $paymentDO = SubjectReader::readPayment($commandSubject);
 
         /** @var Payment $payment */
         $payment = $paymentDO->getPayment();

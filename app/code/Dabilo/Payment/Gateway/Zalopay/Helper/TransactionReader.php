@@ -6,6 +6,7 @@ namespace Dabilo\Payment\Gateway\Zalopay\Helper;
 
 use Dabilo\Payment\Gateway\Zalopay\Requests\AbstractDataBuilder;
 use Dabilo\Payment\Gateway\Zalopay\Validator\AbstractResponseValidator;
+use InvalidArgumentException;
 
 class TransactionReader
 {
@@ -23,7 +24,7 @@ class TransactionReader
     public static function readPayUrl(array $transactionData)
     {
         if (empty($transactionData[AbstractResponseValidator::PAY_URL])) {
-            throw new \InvalidArgumentException('Pay Url should be provided');
+            throw new InvalidArgumentException('Pay Url should be provided');
         }
 
         return $transactionData[AbstractResponseValidator::PAY_URL];
@@ -38,7 +39,7 @@ class TransactionReader
     public static function readOrderId(array $transactionData): string
     {
         if (empty($transactionData[AbstractDataBuilder::TRANS_DATA][AbstractDataBuilder::APP_TRANS_ID])) {
-            throw new \InvalidArgumentException('Order Id doesn\'t exist');
+            throw new InvalidArgumentException('Order Id doesn\'t exist');
         }
 
         return explode('_', $transactionData[AbstractDataBuilder::TRANS_DATA][AbstractDataBuilder::APP_TRANS_ID])[1];

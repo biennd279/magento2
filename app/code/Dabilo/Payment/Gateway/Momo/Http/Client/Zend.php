@@ -12,6 +12,7 @@ use Magento\Payment\Gateway\Http\ConverterException;
 use Magento\Payment\Gateway\Http\ConverterInterface;
 use Magento\Payment\Gateway\Http\TransferInterface;
 use Magento\Payment\Model\Method\Logger;
+use Zend_Http_Client_Exception;
 
 class Zend implements ClientInterface
 {
@@ -31,18 +32,19 @@ class Zend implements ClientInterface
     private $logger;
 
     /**
-     * @param ZendClientFactory         $clientFactory
-     * @param Logger                    $logger
+     * @param ZendClientFactory $clientFactory
+     * @param Logger $logger
      * @param ConverterInterface | null $converter
      */
     public function __construct(
         ZendClientFactory $clientFactory,
         Logger $logger,
         ConverterInterface $converter = null
-    ) {
+    )
+    {
         $this->clientFactory = $clientFactory;
-        $this->converter     = $converter;
-        $this->logger        = $logger;
+        $this->converter = $converter;
+        $this->logger = $logger;
     }
 
     /**
@@ -50,11 +52,11 @@ class Zend implements ClientInterface
      * @return array
      * @throws ClientException
      * @throws ConverterException
-     * @throws \Zend_Http_Client_Exception
+     * @throws Zend_Http_Client_Exception
      */
     public function placeRequest(TransferInterface $transferObject)
     {
-        $log    = [
+        $log = [
             'request' => $this->converter ? $this->converter->convert($transferObject->getBody()) : $transferObject->getBody(),
             'request_uri' => $transferObject->getUri()
         ];
@@ -69,10 +71,10 @@ class Zend implements ClientInterface
         $client->setUri($transferObject->getUri());
 
         try {
-            $response        = $client->request();
-            $result          = $this->converter ? $this->converter->convert($response->getBody()) : [$response->getBody()];
+            $response = $client->request();
+            $result = $this->converter ? $this->converter->convert($response->getBody()) : [$response->getBody()];
             $log['response'] = $result;
-        } catch (\Zend_Http_Client_Exception $e) {
+        } catch (Zend_Http_Client_Exception $e) {
             throw new ClientException(
                 __($e->getMessage())
             );

@@ -5,6 +5,7 @@ namespace Dabilo\Payment\Gateway\Momo\Helper;
 
 use Dabilo\Payment\Gateway\Momo\Requests\AbstractDataBuilder;
 use Dabilo\Payment\Gateway\Momo\Validator\AbstractResponseValidator;
+use InvalidArgumentException;
 
 
 class TransactionReader
@@ -24,7 +25,7 @@ class TransactionReader
     public static function readPayUrl(array $transactionData): string
     {
         if (empty($transactionData[AbstractResponseValidator::PAY_URL])) {
-            throw new \InvalidArgumentException('Pay Url should be provided');
+            throw new InvalidArgumentException('Pay Url should be provided');
         }
 
         return $transactionData[AbstractResponseValidator::PAY_URL];
@@ -39,7 +40,7 @@ class TransactionReader
     public static function readOrderId(array $transactionData): string
     {
         if (empty($transactionData[AbstractDataBuilder::ORDER_ID])) {
-            throw new \InvalidArgumentException('Order Id doesn\'t exit');
+            throw new InvalidArgumentException('Order Id doesn\'t exit');
         }
 
         return $transactionData[AbstractDataBuilder::ORDER_ID];

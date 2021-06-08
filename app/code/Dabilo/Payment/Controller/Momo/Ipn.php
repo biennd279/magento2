@@ -5,6 +5,7 @@ namespace Dabilo\Payment\Controller\Momo;
 
 
 use Dabilo\Payment\Gateway\Momo\Helper\TransactionReader;
+use Exception;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
@@ -56,13 +57,13 @@ class Ipn extends Action implements CsrfAwareActionInterface
     /**
      * Ipn constructor.
      *
-     * @param Context                  $context
-     * @param Session                  $checkoutSession
-     * @param MethodInterface          $method
+     * @param Context $context
+     * @param Session $checkoutSession
+     * @param MethodInterface $method
      * @param PaymentDataObjectFactory $paymentDataObjectFactory
      * @param OrderRepositoryInterface $orderRepository
-     * @param OrderFactory             $orderFactory
-     * @param CommandPoolInterface     $commandPool
+     * @param OrderFactory $orderFactory
+     * @param CommandPoolInterface $commandPool
      */
     public function __construct(
         Context $context,
@@ -72,14 +73,15 @@ class Ipn extends Action implements CsrfAwareActionInterface
         OrderRepositoryInterface $orderRepository,
         OrderFactory $orderFactory,
         CommandPoolInterface $commandPool
-    ) {
+    )
+    {
         parent::__construct($context);
-        $this->commandPool              = $commandPool;
-        $this->checkoutSession          = $checkoutSession;
-        $this->orderRepository          = $orderRepository;
-        $this->method                   = $method;
+        $this->commandPool = $commandPool;
+        $this->checkoutSession = $checkoutSession;
+        $this->orderRepository = $orderRepository;
+        $this->method = $method;
         $this->paymentDataObjectFactory = $paymentDataObjectFactory;
-        $this->orderFactory             = $orderFactory;
+        $this->orderFactory = $orderFactory;
     }
 
     /**
@@ -99,7 +101,7 @@ class Ipn extends Action implements CsrfAwareActionInterface
         try {
             $response = $this->getRequest()->getPostValue();
             $orderIncrementId = TransactionReader::readOrderId($response);
-            $order  = $this->orderFactory->create()->loadByIncrementId($orderIncrementId);
+            $order = $this->orderFactory->create()->loadByIncrementId($orderIncrementId);
             $payment = $order->getPayment();
             ContextHelper::assertOrderPayment($payment);
             if ($payment->getMethod() === $this->method->getCode()) {
@@ -117,7 +119,7 @@ class Ipn extends Action implements CsrfAwareActionInterface
                     'messages' => __('Success')
                 ];
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->_objectManager->get('\Psr\Log\LoggerInterface')->critical($e->getMessage());
             $this->messageManager->addErrorMessage(__('Transaction has been declined. Please try again later.'));
             $resultJson->setHttpResponseCode(500);
@@ -149,7 +151,7 @@ class Ipn extends Action implements CsrfAwareActionInterface
      */
     public function validateForCsrf(RequestInterface $request): ?bool
     {
-        return  true;
+        return true;
     }
 }
 

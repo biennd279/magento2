@@ -4,6 +4,7 @@
 namespace Dabilo\Payment\Gateway\Momo\Response;
 
 use Dabilo\Payment\Gateway\Momo\Validator\AbstractResponseValidator;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Sales\Model\Order\Payment;
@@ -21,7 +22,7 @@ class TransactionRefundHandler implements HandlerInterface
     /**
      * @param array $handlingSubject
      * @param array $response
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function handle(array $handlingSubject, array $response)
     {

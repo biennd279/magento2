@@ -8,12 +8,10 @@ use Magento\Framework\Escaper;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Serialize\Serializer\Json;
-use Magento\Payment\Gateway\ConfigInterface;
-use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Payment\Gateway\Helper\SubjectReader;
+use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Sales\Model\Order\Item;
 use Magento\Sales\Model\Order\Payment;
-use Magento\Store\Model\StoreManagerInterface;
 
 
 class ItemDetailsDataBuilder extends AbstractDataBuilder implements BuilderInterface
@@ -54,18 +52,19 @@ class ItemDetailsDataBuilder extends AbstractDataBuilder implements BuilderInter
 
     /**
      * ItemDetailsDataBuilder constructor.
-     * @param Rate    $helperRate
+     * @param Rate $helperRate
      * @param Escaper $escaper
-     * @param Json    $serializer
+     * @param Json $serializer
      */
     public function __construct(
         Rate $helperRate,
         Escaper $escaper,
         Json $serializer
-    ) {
+    )
+    {
         $this->serializer = $serializer;
         $this->helperRate = $helperRate;
-        $this->escaper    = $escaper;
+        $this->escaper = $escaper;
     }
 
     /**
@@ -78,8 +77,8 @@ class ItemDetailsDataBuilder extends AbstractDataBuilder implements BuilderInter
     {
         $paymentDO = SubjectReader::readPayment($buildSubject);
         /** @var Payment $payment */
-        $payment   = $paymentDO->getPayment();
-        $order     = $payment->getOrder();
+        $payment = $paymentDO->getPayment();
+        $order = $payment->getOrder();
         $itemsData = [];
 
         /** @var Item $item */

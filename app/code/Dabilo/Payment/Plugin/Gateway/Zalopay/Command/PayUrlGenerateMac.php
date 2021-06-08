@@ -22,7 +22,8 @@ class PayUrlGenerateMac
      */
     public function __construct(
         Authorization $authorization
-    ) {
+    )
+    {
         $this->authorization = $authorization;
     }
 

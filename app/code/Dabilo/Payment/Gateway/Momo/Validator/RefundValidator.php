@@ -41,7 +41,7 @@ class RefundValidator extends AbstractResponseValidator
     /**
      * Validate total amount.
      *
-     * @param array               $response
+     * @param array $response
      * @param array|number|string $amount
      * @return boolean
      */
@@ -54,7 +54,7 @@ class RefundValidator extends AbstractResponseValidator
     /**
      * @inheritDoc
      */
-    protected function getSignatureArray() : array
+    protected function getSignatureArray(): array
     {
         return [
             AbstractDataBuilder::PARTNER_CODE,

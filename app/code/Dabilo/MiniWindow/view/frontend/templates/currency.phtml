@@ -1,21 +1,24 @@
 <?php
-/** @var \Dabilo\MiniWindow\Block\CurrencyBlock $block */
+/** @var CurrencyBlock $block */
+
+use Dabilo\MiniWindow\Block\CurrencyBlock;
+
 ?>
 <?php
-    $result = $block->getCurrencyInformation();
-    $data = simplexml_load_string($result);
-    $time = $data->DateTime;
-    $rate = $data->Exrate;
-    
+$result = $block->getCurrencyInformation();
+$data = simplexml_load_string($result);
+$time = $data->DateTime;
+$rate = $data->Exrate;
+
 ?>
 <h1 id="label_try"><?php echo $block->getLabel(); ?> </h1>
 
 <button id="currency_button">Show currency</button>
 <div id="show_currency"></div>
 <script type="text/javascript">
-    require(["jquery"],function($) {
-        $(document).ready(function() {
-            $('#currency_button').click(function(){
+    require(["jquery"], function ($) {
+        $(document).ready(function () {
+            $('#currency_button').click(function () {
                 <table border="1">
                     <tr>
                         <td>Code</td>
@@ -24,8 +27,8 @@
                         <td>Transfer</td>
                         <td>Sell</td>
                     </tr>
-                <?php
-                foreach($rate as $currency) {
+                    <?php
+                    foreach($rate as $currency) {
                     $code = $currency['CurrencyCode'];
                     $name = $currency['CurrencyName'];
                     $buy = $currency['Buy'];
@@ -39,7 +42,7 @@
                         <td><?php echo $sell?></td>
                     </tr>
                     <?php
-                } ?>
+                    } ?>
                 </table>
                 $('#show_currency').html(info);
             });

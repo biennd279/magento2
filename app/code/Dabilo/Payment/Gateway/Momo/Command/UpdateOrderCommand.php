@@ -6,6 +6,7 @@ namespace Dabilo\Payment\Gateway\Momo\Command;
 
 use Dabilo\Payment\Gateway\Momo\Helper\TransactionReader;
 use Dabilo\Payment\Gateway\Momo\Validator\AbstractResponseValidator;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Payment\Gateway\CommandInterface;
 use Magento\Payment\Gateway\ConfigInterface;
 use Magento\Payment\Gateway\Helper\ContextHelper;
@@ -30,21 +31,22 @@ class UpdateOrderCommand implements CommandInterface
     /**
      * Constructor
      *
-     * @param ConfigInterface          $config
+     * @param ConfigInterface $config
      * @param OrderRepositoryInterface $orderRepository
      */
     public function __construct(
         ConfigInterface $config,
         OrderRepositoryInterface $orderRepository
-    ) {
-        $this->config          = $config;
+    )
+    {
+        $this->config = $config;
         $this->orderRepository = $orderRepository;
     }
 
     /**
      * @param array $commandSubject
      * @return void
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function execute(array $commandSubject)
     {
@@ -52,7 +54,7 @@ class UpdateOrderCommand implements CommandInterface
 
         /** @var Payment $payment */
         $payment = $paymentDO->getPayment();
-        $order   = $payment->getOrder();
+        $order = $payment->getOrder();
         ContextHelper::assertOrderPayment($payment);
 
         if ($order->getState() === Order::STATE_PENDING_PAYMENT) {

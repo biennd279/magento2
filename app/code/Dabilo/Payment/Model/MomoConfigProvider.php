@@ -31,7 +31,8 @@ class MomoConfigProvider implements ConfigProviderInterface
         ResolverInterface $localeResolver,
         PaymentHelper $paymentHelper,
         UrlInterface $urlBuilder
-    ) {
+    )
+    {
         $this->localeResolver = $localeResolver;
         $this->paymentHelper = $paymentHelper;
         $this->urlBuilder = $urlBuilder;
@@ -43,12 +44,12 @@ class MomoConfigProvider implements ConfigProviderInterface
     public function getConfig(): array
     {
         return [
-          "payment" => [
-              "momo" => [
-                  "redirectUrl" => $this->urlBuilder->getUrl("payment/momo/start"),
-                  "logoSrc" => self::MOMO_LOGO_SRC,
-              ]
-          ]
+            "payment" => [
+                "momo" => [
+                    "redirectUrl" => $this->urlBuilder->getUrl("payment/momo/start"),
+                    "logoSrc" => self::MOMO_LOGO_SRC,
+                ]
+            ]
         ];
     }
 }

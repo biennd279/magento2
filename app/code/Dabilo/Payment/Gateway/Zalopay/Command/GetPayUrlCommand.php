@@ -4,17 +4,17 @@
 namespace Dabilo\Payment\Gateway\Zalopay\Command;
 
 use Dabilo\Payment\Gateway\Zalopay\Validator\AbstractResponseValidator;
+use Magento\Payment\Gateway\Command\CommandException;
 use Magento\Payment\Gateway\Command\Result\ArrayResult;
+use Magento\Payment\Gateway\Command\Result\ArrayResultFactory;
+use Magento\Payment\Gateway\Command\ResultInterface;
 use Magento\Payment\Gateway\CommandInterface;
 use Magento\Payment\Gateway\Http\ClientException;
 use Magento\Payment\Gateway\Http\ClientInterface;
-use Magento\Payment\Gateway\Command\ResultInterface;
-use Magento\Payment\Gateway\Command\CommandException;
 use Magento\Payment\Gateway\Http\ConverterException;
+use Magento\Payment\Gateway\Http\TransferFactoryInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
-use Magento\Payment\Gateway\Http\TransferFactoryInterface;
-use Magento\Payment\Gateway\Command\Result\ArrayResultFactory;
 
 class GetPayUrlCommand implements CommandInterface
 {
@@ -46,11 +46,11 @@ class GetPayUrlCommand implements CommandInterface
     /**
      * Constructor
      *
-     * @param BuilderInterface         $requestBuilder
+     * @param BuilderInterface $requestBuilder
      * @param TransferFactoryInterface $transferFactory
-     * @param ClientInterface          $client
-     * @param ArrayResultFactory       $resultFactory
-     * @param ValidatorInterface       $validator
+     * @param ClientInterface $client
+     * @param ArrayResultFactory $resultFactory
+     * @param ValidatorInterface $validator
      */
     public function __construct(
         BuilderInterface $requestBuilder,
@@ -58,12 +58,13 @@ class GetPayUrlCommand implements CommandInterface
         ClientInterface $client,
         ArrayResultFactory $resultFactory,
         ValidatorInterface $validator
-    ) {
-        $this->requestBuilder  = $requestBuilder;
+    )
+    {
+        $this->requestBuilder = $requestBuilder;
         $this->transferFactory = $transferFactory;
-        $this->client          = $client;
-        $this->resultFactory   = $resultFactory;
-        $this->validator       = $validator;
+        $this->client = $client;
+        $this->resultFactory = $resultFactory;
+        $this->validator = $validator;
     }
 
     /**
@@ -76,8 +77,8 @@ class GetPayUrlCommand implements CommandInterface
     public function execute(array $commandSubject)
     {
         $transferO = $this->transferFactory->create($this->buildRequestData($commandSubject));
-        $response  = $this->client->placeRequest($transferO);
-        $result    = $this->validator->validate(array_merge($commandSubject, ['response' => $response]));
+        $response = $this->client->placeRequest($transferO);
+        $result = $this->validator->validate(array_merge($commandSubject, ['response' => $response]));
 
         if (!$result->isValid()) {
             throw new CommandException(__(implode("\n", $result->getFailsDescription())));

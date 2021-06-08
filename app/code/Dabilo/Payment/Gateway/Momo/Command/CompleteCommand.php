@@ -21,14 +21,15 @@ class CompleteCommand implements CommandInterface
 
     /**
      * @param UpdateDetailsCommand $updateDetailsCommand
-     * @param UpdateOrderCommand   $updateOrderCommand
+     * @param UpdateOrderCommand $updateOrderCommand
      */
     public function __construct(
         UpdateDetailsCommand $updateDetailsCommand,
         UpdateOrderCommand $updateOrderCommand
-    ) {
+    )
+    {
         $this->updateDetailsCommand = $updateDetailsCommand;
-        $this->updateOrderCommand   = $updateOrderCommand;
+        $this->updateOrderCommand = $updateOrderCommand;
     }
 
     /**

@@ -4,12 +4,12 @@
 namespace Dabilo\Payment\Gateway\Zalopay\Helper;
 
 
+use Exception;
 use Magento\Directory\Helper\Data;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Sales\Model\Order;
 use Magento\Store\Model\StoreManagerInterface;
-use Dabilo\Payment\Gateway\Zalopay\Requests\AbstractDataBuilder;
 
 class Rate
 {
@@ -31,20 +31,21 @@ class Rate
     /**
      * OrderDetailsDataBuilder constructor.
      *
-     * @param ConfigInterface       $config
-     * @param Data                  $helperData
+     * @param ConfigInterface $config
+     * @param Data $helperData
      * @param StoreManagerInterface $storeManager
      */
     public function __construct(
         Data $helperData,
         StoreManagerInterface $storeManager
-    ) {
+    )
+    {
         $this->storeManager = $storeManager;
-        $this->helperData   = $helperData;
+        $this->helperData = $helperData;
     }
 
     /**
-     * @param Order  $order
+     * @param Order $order
      * @param $amount
      * @return string
      * @throws NoSuchEntityException
@@ -61,7 +62,7 @@ class Rate
                     $order->getOrderCurrencyCode(),
                     self::CURRENCY_CODE
                 ));
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 throw new LocalizedException(
                     __('We can\'t convert base currency to %1. Please setup currency rates.', self::CURRENCY_CODE)
                 );

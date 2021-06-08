@@ -1,9 +1,12 @@
 <?php
 
-namespace  Dabilo\MiniWindow\Model;
+namespace Dabilo\MiniWindow\Model;
 
 
 use Magento\Framework\App\Request\Http;
+use Magento\Framework\HTTP\Client\Curl;
+use Magento\Framework\HTTP\Client\CurlFactory;
+use Magento\Framework\Json\Helper\Data;
 
 class Weather
 {
@@ -15,7 +18,7 @@ class Weather
 
     private $response;
     /**
-     * @var \Magento\Framework\HTTP\Client\CurlFactory
+     * @var CurlFactory
      */
     private $curlFactory;
     /**
@@ -23,20 +26,20 @@ class Weather
      */
     private $http;
     /**
-     * @var \Magento\Framework\Json\Helper\Data
+     * @var Data
      */
     private $jsonHelper;
 
     /**
      * Weather constructor.
-     * @param \Magento\Framework\HTTP\Client\CurlFactory $curlFactory
+     * @param CurlFactory $curlFactory
      * @param Http $http
-     * @param \Magento\Framework\Json\Helper\Data $jsonHelper
+     * @param Data $jsonHelper
      */
     public function __construct(
-        \Magento\Framework\HTTP\Client\CurlFactory $curlFactory,
+        CurlFactory $curlFactory,
         Http $http,
-        \Magento\Framework\Json\Helper\Data $jsonHelper
+        Data $jsonHelper
     )
     {
         $this->curlFactory = $curlFactory;
@@ -46,8 +49,8 @@ class Weather
 
     public function getWeatherResponse()
     {
-        if(!$this->response){
-            $this->response = (object) $this->getResponseFromEndPoint();
+        if (!$this->response) {
+            $this->response = (object)$this->getResponseFromEndPoint();
         }
         return $this->response;
     }
@@ -59,7 +62,7 @@ class Weather
 
     private function getResponse()
     {
-        /** @var \Magento\Framework\HTTP\Client\Curl $client */
+        /** @var Curl $client */
         $client = $this->curlFactory->create();
         $client->setTimeout(self::REQUEST_TIMEOUT);
         $client->get(

@@ -92,16 +92,17 @@ abstract class AbstractResponseValidator extends AbstractValidator
      * AbstractResponseValidator constructor.
      *
      * @param ResultInterfaceFactory $resultFactory
-     * @param Authorization          $authorization
-     * @param Rate                   $helperRate
+     * @param Authorization $authorization
+     * @param Rate $helperRate
      */
     public function __construct(
         ResultInterfaceFactory $resultFactory,
         Authorization $authorization,
         Rate $helperRate
-    ) {
+    )
+    {
         parent::__construct($resultFactory);
-        $this->helperRate    = $helperRate;
+        $this->helperRate = $helperRate;
         $this->authorization = $authorization;
     }
 

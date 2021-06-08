@@ -5,6 +5,7 @@ namespace Dabilo\Payment\Controller\Zalopay;
 
 
 use Dabilo\Payment\Gateway\Zalopay\Helper\TransactionReader;
+use Exception;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
@@ -14,14 +15,15 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Serialize\Serializer\Json as SerializerJson;
 use Magento\Payment\Gateway\Command\CommandPoolInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectFactory;
 use Magento\Payment\Gateway\Helper\ContextHelper;
 use Magento\Payment\Model\MethodInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
-use Magento\Sales\Model\OrderFactory;
-use Magento\Framework\Serialize\Serializer\Json as SerializerJson;
 use Magento\Sales\Model\Order;
+use Magento\Sales\Model\OrderFactory;
 
 
 class Ipn extends Action implements CsrfAwareActionInterface
@@ -64,14 +66,14 @@ class Ipn extends Action implements CsrfAwareActionInterface
     /**
      * Ipn constructor.
      *
-     * @param Context                  $context
-     * @param Session                  $checkoutSession
-     * @param MethodInterface          $method
+     * @param Context $context
+     * @param Session $checkoutSession
+     * @param MethodInterface $method
      * @param PaymentDataObjectFactory $paymentDataObjectFactory
      * @param OrderRepositoryInterface $orderRepository
-     * @param OrderFactory             $orderFactory
-     * @param SerializerJson           $serializer
-     * @param CommandPoolInterface     $commandPool
+     * @param OrderFactory $orderFactory
+     * @param SerializerJson $serializer
+     * @param CommandPoolInterface $commandPool
      */
     public function __construct(
         Context $context,
@@ -82,19 +84,20 @@ class Ipn extends Action implements CsrfAwareActionInterface
         OrderFactory $orderFactory,
         SerializerJson $serializer,
         CommandPoolInterface $commandPool
-    ) {
+    )
+    {
         parent::__construct($context);
-        $this->commandPool              = $commandPool;
-        $this->checkoutSession          = $checkoutSession;
-        $this->orderRepository          = $orderRepository;
-        $this->method                   = $method;
+        $this->commandPool = $commandPool;
+        $this->checkoutSession = $checkoutSession;
+        $this->orderRepository = $orderRepository;
+        $this->method = $method;
         $this->paymentDataObjectFactory = $paymentDataObjectFactory;
-        $this->orderFactory             = $orderFactory;
-        $this->serializer               = $serializer;
+        $this->orderFactory = $orderFactory;
+        $this->serializer = $serializer;
     }
 
     /**
-     * @return ResponseInterface|Json|\Magento\Framework\Controller\ResultInterface
+     * @return ResponseInterface|Json|ResultInterface
      */
     public function execute()
     {
@@ -103,19 +106,19 @@ class Ipn extends Action implements CsrfAwareActionInterface
         }
         /** @var Json $resultJson */
         $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
-        $data       = [
+        $data = [
             'errors' => true,
             'messages' => __('Something went wrong white execute.')
         ];
         try {
             $response = $this->getRequest()->getContent();
             if ($response && is_string($response)) {
-                $response               = $this->serializer->unserialize($response);
+                $response = $this->serializer->unserialize($response);
                 $response['trans_data'] = $this->serializer->unserialize($response['data']);
             }
             $orderIncrementId = TransactionReader::readOrderId($response);
-            $order            = $this->orderFactory->create()->loadByIncrementId($orderIncrementId);
-            $payment          = $order->getPayment();
+            $order = $this->orderFactory->create()->loadByIncrementId($orderIncrementId);
+            $payment = $order->getPayment();
             ContextHelper::assertOrderPayment($payment);
             if ($payment->getMethod() === $this->method->getCode()
                 && $order->getState() === Order::STATE_PENDING_PAYMENT) {
@@ -133,7 +136,7 @@ class Ipn extends Action implements CsrfAwareActionInterface
                     'messages' => __('Success')
                 ];
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->_objectManager->get('\Psr\Log\LoggerInterface')->critical($e->getMessage());
             $this->messageManager->addErrorMessage(__('Transaction has been declined. Please try again later.'));
             $resultJson->setHttpResponseCode(500);
@@ -165,7 +168,7 @@ class Ipn extends Action implements CsrfAwareActionInterface
      */
     public function validateForCsrf(RequestInterface $request): ?bool
     {
-        return  true;
+        return true;
     }
 }
 

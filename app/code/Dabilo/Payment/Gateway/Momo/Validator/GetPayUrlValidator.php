@@ -32,9 +32,22 @@ class GetPayUrlValidator extends AbstractResponseValidator
     }
 
     /**
+     * Validate Order Id
+     *
+     * @param array $response
+     * @param $orderId
+     * @return boolean
+     */
+    protected function validateOrderId(array $response, $orderId): bool
+    {
+        return isset($response[AbstractDataBuilder::ORDER_ID])
+            && (string)($response[AbstractDataBuilder::ORDER_ID]) === (string)$orderId;
+    }
+
+    /**
      * @return array
      */
-    protected function getSignatureArray() : array
+    protected function getSignatureArray(): array
     {
         return [
             AbstractDataBuilder::REQUEST_ID,
@@ -45,18 +58,5 @@ class GetPayUrlValidator extends AbstractResponseValidator
             self::ERROR_CODE,
             AbstractDataBuilder::REQUEST_TYPE
         ];
-    }
-
-    /**
-     * Validate Order Id
-     *
-     * @param array   $response
-     * @param $orderId
-     * @return boolean
-     */
-    protected function validateOrderId(array $response, $orderId): bool
-    {
-        return isset($response[AbstractDataBuilder::ORDER_ID])
-            && (string)($response[AbstractDataBuilder::ORDER_ID]) === (string)$orderId;
     }
 }

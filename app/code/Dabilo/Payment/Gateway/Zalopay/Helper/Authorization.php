@@ -3,9 +3,9 @@
 
 namespace Dabilo\Payment\Gateway\Zalopay\Helper;
 
+use Dabilo\Payment\Gateway\Zalopay\Requests\AbstractDataBuilder;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Payment\Gateway\ConfigInterface;
-use Dabilo\Payment\Gateway\Zalopay\Requests\AbstractDataBuilder;
 
 class Authorization
 {
@@ -27,14 +27,15 @@ class Authorization
     /**
      * Authorization constructor.
      *
-     * @param Json            $serializer
+     * @param Json $serializer
      * @param ConfigInterface $config
      */
     public function __construct(
         Json $serializer,
         ConfigInterface $config
-    ) {
-        $this->config     = $config;
+    )
+    {
+        $this->config = $config;
         $this->serializer = $serializer;
     }
 
@@ -50,6 +51,16 @@ class Authorization
     }
 
     /**
+     * Get Key 2
+     *
+     * @return string
+     */
+    private function getKey1(): string
+    {
+        return $this->config->getValue(AbstractDataBuilder::KEY_1);
+    }
+
+    /**
      * Get Mac By Key 2
      *
      * @param string $transData
@@ -58,6 +69,16 @@ class Authorization
     public function getMacKey2(string $transData): string
     {
         return hash_hmac('sha256', $transData, $this->getKey2());
+    }
+
+    /**
+     * Get Key 2
+     *
+     * @return string
+     */
+    private function getKey2(): string
+    {
+        return $this->config->getValue(AbstractDataBuilder::KEY_2);
     }
 
     /**
@@ -94,26 +115,6 @@ class Authorization
         return [
             'Content-Type: application/x-www-form-urlencoded'
         ];
-    }
-
-    /**
-     * Get Key 2
-     *
-     * @return string
-     */
-    private function getKey1(): string
-    {
-        return $this->config->getValue(AbstractDataBuilder::KEY_1);
-    }
-
-    /**
-     * Get Key 2
-     *
-     * @return string
-     */
-    private function getKey2(): string
-    {
-        return $this->config->getValue(AbstractDataBuilder::KEY_2);
     }
 }
 

@@ -55,7 +55,7 @@ class CompleteValidator extends AbstractResponseValidator
     /**
      * @inheritDoc
      */
-    protected function getSignatureArray() : array
+    protected function getSignatureArray(): array
     {
         return [
             AbstractDataBuilder::PARTNER_CODE,

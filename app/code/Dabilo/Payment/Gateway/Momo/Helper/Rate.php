@@ -4,6 +4,7 @@
 namespace Dabilo\Payment\Gateway\Momo\Helper;
 
 
+use Exception;
 use Magento\Directory\Helper\Data;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -13,8 +14,8 @@ use Magento\Store\Model\StoreManagerInterface;
 class Rate
 {
     /**
- * Vietnam dong currency
- */
+     * Vietnam dong currency
+     */
     const CURRENCY_CODE = 'VND';
 
     /**
@@ -36,9 +37,10 @@ class Rate
     public function __construct(
         Data $helperData,
         StoreManagerInterface $storeManager
-    ) {
+    )
+    {
         $this->storeManager = $storeManager;
-        $this->helperData   = $helperData;
+        $this->helperData = $helperData;
     }
 
     /**
@@ -59,7 +61,7 @@ class Rate
                     $order->getOrderCurrencyCode(),
                     self::CURRENCY_CODE
                 ));
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 throw new LocalizedException(
                     __('We can\'t convert base currency to %1. Please setup currency rates.', self::CURRENCY_CODE)
                 );

@@ -21,7 +21,14 @@ abstract class AbstractTransferFactory implements TransferFactoryInterface
      * @var TransferBuilder
      */
     protected $transferBuilder;
-
+    /**
+     * @var Json
+     */
+    protected $serializer;
+    /**
+     * @var null
+     */
+    protected $urlPath;
     /**
      * Authenticate & generate Headers
      *
@@ -30,23 +37,13 @@ abstract class AbstractTransferFactory implements TransferFactoryInterface
     private $authorization;
 
     /**
-     * @var Json
-     */
-    protected $serializer;
-
-    /**
-     * @var null
-     */
-    protected $urlPath;
-
-    /**
      * AbstractTransferFactory constructor.
      *
      * @param ConfigInterface $config
      * @param TransferBuilder $transferBuilder
-     * @param Json            $serializer
-     * @param Authorization   $authorization
-     * @param null            $urlPath
+     * @param Json $serializer
+     * @param Authorization $authorization
+     * @param null $urlPath
      */
     public function __construct(
         ConfigInterface $config,
@@ -54,12 +51,13 @@ abstract class AbstractTransferFactory implements TransferFactoryInterface
         Json $serializer,
         Authorization $authorization,
         $urlPath = null
-    ) {
-        $this->config          = $config;
+    )
+    {
+        $this->config = $config;
         $this->transferBuilder = $transferBuilder;
-        $this->authorization   = $authorization;
-        $this->serializer      = $serializer;
-        $this->urlPath         = $urlPath;
+        $this->authorization = $authorization;
+        $this->serializer = $serializer;
+        $this->urlPath = $urlPath;
     }
 
     /**

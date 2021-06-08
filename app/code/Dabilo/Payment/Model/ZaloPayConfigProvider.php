@@ -29,17 +29,18 @@ class ZaloPayConfigProvider implements ConfigProviderInterface
     /**
      * ZaloPayConfigProvider constructor.
      *
-     * @param Repository    $assetRepository
+     * @param Repository $assetRepository
      * @param PaymentHelper $paymentHelper
-     * @param UrlInterface  $urlBuilder
+     * @param UrlInterface $urlBuilder
      */
     public function __construct(
         Repository $assetRepository,
         PaymentHelper $paymentHelper,
         UrlInterface $urlBuilder
-    ) {
-        $this->paymentHelper   = $paymentHelper;
-        $this->urlBuilder      = $urlBuilder;
+    )
+    {
+        $this->paymentHelper = $paymentHelper;
+        $this->urlBuilder = $urlBuilder;
         $this->assetRepository = $assetRepository;
     }
 
@@ -52,7 +53,7 @@ class ZaloPayConfigProvider implements ConfigProviderInterface
             'payment' => [
                 'zalopay' => [
                     'redirectUrl' => $this->urlBuilder->getUrl('payment/zalopay/start'),
-                    'logoSrc' => "",
+                    'logoSrc' => "https://stccbo.zalopay.vn/zalopay-public/websites/ver201229/images/logozlp1.png",
                 ]
             ]
         ];

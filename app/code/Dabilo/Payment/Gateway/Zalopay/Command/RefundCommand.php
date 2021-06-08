@@ -4,6 +4,7 @@
 namespace Dabilo\Payment\Gateway\Zalopay\Command;
 
 use Magento\Payment\Gateway\Command\CommandException;
+use Magento\Payment\Gateway\CommandInterface;
 use Magento\Payment\Gateway\ErrorMapper\ErrorMessageMapperInterface;
 use Magento\Payment\Gateway\Http\ClientException;
 use Magento\Payment\Gateway\Http\ClientInterface;
@@ -13,7 +14,6 @@ use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Magento\Payment\Gateway\Validator\ResultInterface;
 use Magento\Payment\Gateway\Validator\ValidatorInterface;
-use Magento\Payment\Gateway\CommandInterface;
 use Psr\Log\LoggerInterface;
 
 
@@ -55,12 +55,12 @@ class RefundCommand implements CommandInterface
     private $errorMessageMapper;
 
     /**
-     * @param BuilderInterface                 $requestBuilder
-     * @param TransferFactoryInterface         $transferFactory
-     * @param ClientInterface                  $client
-     * @param LoggerInterface                  $logger
-     * @param HandlerInterface                 $handler
-     * @param ValidatorInterface               $validator
+     * @param BuilderInterface $requestBuilder
+     * @param TransferFactoryInterface $transferFactory
+     * @param ClientInterface $client
+     * @param LoggerInterface $logger
+     * @param HandlerInterface $handler
+     * @param ValidatorInterface $validator
      * @param ErrorMessageMapperInterface|null $errorMessageMapper
      */
     public function __construct(
@@ -71,13 +71,14 @@ class RefundCommand implements CommandInterface
         HandlerInterface $handler = null,
         ValidatorInterface $validator = null,
         ErrorMessageMapperInterface $errorMessageMapper = null
-    ) {
-        $this->requestBuilder     = $requestBuilder;
-        $this->transferFactory    = $transferFactory;
-        $this->client             = $client;
-        $this->handler            = $handler;
-        $this->validator          = $validator;
-        $this->logger             = $logger;
+    )
+    {
+        $this->requestBuilder = $requestBuilder;
+        $this->transferFactory = $transferFactory;
+        $this->client = $client;
+        $this->handler = $handler;
+        $this->validator = $validator;
+        $this->logger = $logger;
         $this->errorMessageMapper = $errorMessageMapper;
     }
 
@@ -133,16 +134,16 @@ class RefundCommand implements CommandInterface
      */
     private function processErrors(ResultInterface $result)
     {
-        $messages     = [];
+        $messages = [];
         $errorsSource = array_merge($result->getErrorCodes(), $result->getFailsDescription());
         foreach ($errorsSource as $errorCodeOrMessage) {
-            $errorCodeOrMessage = (string) $errorCodeOrMessage;
+            $errorCodeOrMessage = (string)$errorCodeOrMessage;
 
             // error messages mapper can be not configured if payment method doesn't have custom error messages.
             if ($this->errorMessageMapper !== null) {
-                $mapped = (string) $this->errorMessageMapper->getMessage($errorCodeOrMessage);
+                $mapped = (string)$this->errorMessageMapper->getMessage($errorCodeOrMessage);
                 if (!empty($mapped)) {
-                    $messages[]         = $mapped;
+                    $messages[] = $mapped;
                     $errorCodeOrMessage = $mapped;
                 }
             }

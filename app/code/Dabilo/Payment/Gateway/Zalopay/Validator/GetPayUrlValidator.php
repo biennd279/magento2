@@ -15,8 +15,8 @@ class GetPayUrlValidator extends AbstractResponseValidator
      */
     public function validate(array $validationSubject)
     {
-        $response         = SubjectReader::readResponse($validationSubject);
-        $errorMessages    = [];
+        $response = SubjectReader::readResponse($validationSubject);
+        $errorMessages = [];
         $validationResult = $this->validateReturnCode($response) && $this->validatePayUrl($response);
 
         if (!$validationResult) {

@@ -5,15 +5,16 @@ namespace Dabilo\Payment\Gateway\Zalopay\Command;
 
 
 use Dabilo\Payment\Gateway\Zalopay\Helper\TransactionReader;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Payment\Gateway\Command;
-use Magento\Sales\Model\Order;
-use Magento\Sales\Model\Order\Payment;
-use Magento\Payment\Gateway\ConfigInterface;
 use Magento\Payment\Gateway\CommandInterface;
-use Magento\Sales\Api\OrderRepositoryInterface;
+use Magento\Payment\Gateway\ConfigInterface;
 use Magento\Payment\Gateway\Helper\ContextHelper;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Payment\Model\MethodInterface;
+use Magento\Sales\Api\OrderRepositoryInterface;
+use Magento\Sales\Model\Order;
+use Magento\Sales\Model\Order\Payment;
 
 class UpdateOrderCommand implements CommandInterface
 {
@@ -30,28 +31,29 @@ class UpdateOrderCommand implements CommandInterface
     /**
      * Constructor
      *
-     * @param ConfigInterface          $config
+     * @param ConfigInterface $config
      * @param OrderRepositoryInterface $orderRepository
      */
     public function __construct(
         ConfigInterface $config,
         OrderRepositoryInterface $orderRepository
-    ) {
-        $this->config          = $config;
+    )
+    {
+        $this->config = $config;
         $this->orderRepository = $orderRepository;
     }
 
     /**
      * @param array $commandSubject
      * @return Command\ResultInterface|void|null
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function execute(array $commandSubject)
     {
         $paymentDO = SubjectReader::readPayment($commandSubject);
         /** @var Payment $payment */
         $payment = $paymentDO->getPayment();
-        $order   = $payment->getOrder();
+        $order = $payment->getOrder();
         ContextHelper::assertOrderPayment($payment);
 
         if ($order->getState() === Order::STATE_PENDING_PAYMENT) {

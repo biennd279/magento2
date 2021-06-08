@@ -26,8 +26,8 @@ class ResponseMessagesHandler implements HandlerInterface
         ContextHelper::assertOrderPayment($payment);
 
         $responseCode = $response[AbstractResponseValidator::ERROR_CODE];
-        $messages     = $response[AbstractResponseValidator::RESPONSE_MESSAGE];
-        $state        = $this->getState($responseCode);
+        $messages = $response[AbstractResponseValidator::RESPONSE_MESSAGE];
+        $state = $this->getState($responseCode);
 
         if ($state) {
             $payment->setAdditionalInformation(

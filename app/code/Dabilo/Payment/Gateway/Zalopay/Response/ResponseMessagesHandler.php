@@ -4,17 +4,18 @@
 namespace Dabilo\Payment\Gateway\Zalopay\Response;
 
 use Dabilo\Payment\Gateway\Zalopay\Validator\AbstractResponseValidator;
-use Magento\Sales\Model\Order\Payment;
-use Magento\Payment\Gateway\Helper\SubjectReader;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Payment\Gateway\Helper\ContextHelper;
+use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Payment\Gateway\Response\HandlerInterface;
+use Magento\Sales\Model\Order\Payment;
 
 class ResponseMessagesHandler implements HandlerInterface
 {
     /**
      * @param array $handlingSubject
      * @param array $response
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function handle(array $handlingSubject, array $response)
     {
@@ -24,8 +25,8 @@ class ResponseMessagesHandler implements HandlerInterface
         ContextHelper::assertOrderPayment($payment);
 
         $responseCode = $response[AbstractResponseValidator::RETURN_CODE];
-        $messages     = $response[AbstractResponseValidator::RESPONSE_MESSAGE];
-        $state        = $this->getState($responseCode);
+        $messages = $response[AbstractResponseValidator::RESPONSE_MESSAGE];
+        $state = $this->getState($responseCode);
 
         if ($state) {
             $payment->setAdditionalInformation(

@@ -34,16 +34,17 @@ class RefundDataBuilder extends AbstractDataBuilder implements BuilderInterface
      * RefundDataBuilder constructor.
      *
      * @param ConfigInterface $config
-     * @param Manager         $sequenceManager
-     * @param Rate            $helperRate
+     * @param Manager $sequenceManager
+     * @param Rate $helperRate
      */
     public function __construct(
         ConfigInterface $config,
         Manager $sequenceManager,
         Rate $helperRate
-    ) {
-        $this->config          = $config;
-        $this->helperRate      = $helperRate;
+    )
+    {
+        $this->config = $config;
+        $this->helperRate = $helperRate;
         $this->sequenceManager = $sequenceManager;
     }
 
@@ -56,8 +57,8 @@ class RefundDataBuilder extends AbstractDataBuilder implements BuilderInterface
     public function build(array $buildSubject): array
     {
         $paymentDO = SubjectReader::readPayment($buildSubject);
-        $amount    = round((float)SubjectReader::readAmount($buildSubject), 2);
-        $payment   = $paymentDO->getPayment();
+        $amount = round((float)SubjectReader::readAmount($buildSubject), 2);
+        $payment = $paymentDO->getPayment();
 
         /** @var Creditmemo $creditMemo */
         $creditMemo = $payment->getCreditmemo();
@@ -66,7 +67,7 @@ class RefundDataBuilder extends AbstractDataBuilder implements BuilderInterface
         }
 
         return [
-            self::AMOUNT => (string) $this->helperRate->getVndAmount($payment->getOrder(), $amount),
+            self::AMOUNT => (string)$this->helperRate->getVndAmount($payment->getOrder(), $amount),
             self::ORDER_ID => $this->getCreditMemoPrefix() . $creditMemo->getIncrementId(),
             self::TRANSACTION_ID => $payment->getParentTransactionId()
         ];
@@ -78,7 +79,7 @@ class RefundDataBuilder extends AbstractDataBuilder implements BuilderInterface
      */
     private function setIncrementId($creditMemo)
     {
-        $store   = $creditMemo->getStore();
+        $store = $creditMemo->getStore();
         $storeId = $store->getId();
         if ($storeId === null) {
             $storeId = $store->getGroup()->getDefaultStoreId();

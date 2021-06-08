@@ -33,15 +33,16 @@ class OrderDetailsDataBuilder extends AbstractDataBuilder implements BuilderInte
     /**
      * OrderDetailsDataBuilder constructor.
      *
-     * @param ConfigInterface       $config
+     * @param ConfigInterface $config
      * @param StoreManagerInterface $storeManager
-     * @param Rate                  $helperRate
+     * @param Rate $helperRate
      */
     public function __construct(
         ConfigInterface $config,
         StoreManagerInterface $storeManager,
         Rate $helperRate
-    ) {
+    )
+    {
         $this->config = $config;
         $this->helperRate = $helperRate;
         $this->storeManager = $storeManager;
@@ -63,7 +64,7 @@ class OrderDetailsDataBuilder extends AbstractDataBuilder implements BuilderInte
             self::ORDER_ID => $order->getIncrementId(),
             self::ORDER_INFO => $this->storeManager->getStore()->getName(),
             self::EXTRA_DATA => $this->getExtraData(),
-            self::AMOUNT => (string) $this->helperRate->getVndAmount($order, round((float)SubjectReader::readAmount($buildSubject), 2)),
+            self::AMOUNT => (string)$this->helperRate->getVndAmount($order, round((float)SubjectReader::readAmount($buildSubject), 2)),
 //            self::LANG => AbstractDataBuilder::LANG,
         ];
     }

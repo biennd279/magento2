@@ -3,24 +3,26 @@
 namespace Dabilo\MiniWindow\Block;
 
 
+use Dabilo\MiniWindow\Model\News;
+use Dabilo\MiniWindow\Model\NewsFactory;
 use Magento\Framework\View\Element\Template;
 
-class NewsBlock extends \Magento\Framework\View\Element\Template
+class NewsBlock extends Template
 {
     /**
-     * @var \Dabilo\MiniWindow\Model\NewsFactory
+     * @var NewsFactory
      */
     private $NewsFactory;
 
     /**
      * NewsBlock constructor.
      * @param Template\Context $context
-     * @param \Dabilo\MiniWindow\Model\NewsFactory $NewsFactory
+     * @param NewsFactory $NewsFactory
      * @param array $data
      */
     public function __construct(
         Template\Context $context,
-        \Dabilo\MiniWindow\Model\NewsFactory $NewsFactory,
+        NewsFactory $NewsFactory,
         array $data = []
     )
     {
@@ -29,7 +31,7 @@ class NewsBlock extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return \Dabilo\MiniWindow\Model\News[]
+     * @return News[]
      */
     public function getNewsInformation()
     {

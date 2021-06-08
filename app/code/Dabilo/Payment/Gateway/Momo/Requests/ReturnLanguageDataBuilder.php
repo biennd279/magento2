@@ -4,7 +4,9 @@
 namespace Dabilo\Payment\Gateway\Momo\Requests;
 
 
-class ReturnLanguageDataBuilder extends AbstractDataBuilder implements \Magento\Payment\Gateway\Request\BuilderInterface
+use Magento\Payment\Gateway\Request\BuilderInterface;
+
+class ReturnLanguageDataBuilder extends AbstractDataBuilder implements BuilderInterface
 {
 
     /**

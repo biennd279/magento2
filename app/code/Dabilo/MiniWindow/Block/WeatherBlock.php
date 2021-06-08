@@ -3,24 +3,26 @@
 namespace Dabilo\MiniWindow\Block;
 
 
+use Dabilo\MiniWindow\Model\Weather;
+use Dabilo\MiniWindow\Model\WeatherFactory;
 use Magento\Framework\View\Element\Template;
 
-class WeatherBlock extends \Magento\Framework\View\Element\Template
+class WeatherBlock extends Template
 {
     /**
-     * @var \Dabilo\MiniWindow\Model\WeatherFactory
+     * @var WeatherFactory
      */
     private $weatherFactory;
 
     /**
      * WeatherBlock constructor.
      * @param Template\Context $context
-     * @param \Dabilo\MiniWindow\Model\WeatherFactory $weatherFactory
+     * @param WeatherFactory $weatherFactory
      * @param array $data
      */
     public function __construct(
         Template\Context $context,
-        \Dabilo\MiniWindow\Model\WeatherFactory $weatherFactory,
+        WeatherFactory $weatherFactory,
         array $data = []
     )
     {
@@ -29,7 +31,7 @@ class WeatherBlock extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @return \Dabilo\MiniWindow\Model\Weather[]
+     * @return Weather[]
      */
     public function getWeatherInformation()
     {
