@@ -1,51 +1,44 @@
 <?php
-/** @var CurrencyBlock $block */
+/** @var Currency $block */
 
-use Dabilo\MiniWindow\Block\CurrencyBlock;
+use Dabilo\MiniWindow\Block\Currency;
 
 ?>
 <?php
 $result = $block->getCurrencyInformation();
-$data = simplexml_load_string((string) $result);
+$data = simplexml_load_string($result);
 $time = $data->DateTime;
 $rate = $data->Exrate;
 
 ?>
-<h1 id="label_try"><?php echo $block->getLabel(); ?> </h1>
 
-<button id="currency_button">Show currency</button>
-<div id="show_currency"></div>
-<script type="text/javascript">
-    require(["jquery"], function ($) {
-        $(document).ready(function () {
-            $('#currency_button').click(function () {
-                <table border="1">
-                    <tr>
-                        <td>Code</td>
-                        <td>Currency Name</td>
-                        <td>Buy</td>
-                        <td>Transfer</td>
-                        <td>Sell</td>
-                    </tr>
-                    <?php
-                    foreach($rate as $currency) {
-                    $code = $currency['CurrencyCode'];
-                    $name = $currency['CurrencyName'];
-                    $buy = $currency['Buy'];
-                    $transfer = $currency['Transfer'];
-                    $sell = $currency['Sell']; ?>
-                    <tr>
-                        <td><?php echo $code?></td>
-                        <td><?php echo $name?></td>
-                        <td><?php echo $buy?></td>
-                        <td><?php echo $transfer?></td>
-                        <td><?php echo $sell?></td>
-                    </tr>
-                    <?php
-                    } ?>
-                </table>
-                $('#show_currency').html(info);
-            });
-        });
-    });
-</script>
+<?php if($block->getData('currency')): ?>
+    <h2 class='currency'><?php echo $block->getData('currency'); ?>
+    </h2>
+    <table border="1">
+        <tr>
+            <td>Code</td>
+            <td>Currency Name</td>
+            <td>Buy</td>
+            <td>Transfer</td>
+            <td>Sell</td>
+        </tr>
+        <?php
+        foreach($rate as $currency) {
+            $code = $currency['CurrencyCode'];
+            $name = $currency['CurrencyName'];
+            $buy = $currency['Buy'];
+            $transfer = $currency['Transfer'];
+            $sell = $currency['Sell']; ?>
+            <tr>
+                <td><?php echo $code?></td>
+                <td><?php echo $name?></td>
+                <td><?php echo $buy?></td>
+                <td><?php echo $transfer?></td>
+                <td><?php echo $sell?></td>
+            </tr>
+            <?php
+        } ?>
+    </table>
+<?php endif; ?>
+
