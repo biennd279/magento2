@@ -1,14 +1,17 @@
 <?php
 
-namespace Dabilo\MiniWindow\Block;
+declare(strict_types=1);
 
+namespace Dabilo\MiniWindow\Block\Widget;
 
-use Dabilo\MiniWindow\Model\Currency;
 use Dabilo\MiniWindow\Model\CurrencyFactory;
 use Magento\Framework\View\Element\Template;
+use Magento\Widget\Block\BlockInterface;
 
-class CurrencyBlock extends Template
+class Currency extends Template implements BlockInterface
 {
+    protected $_template = "widget/currency.phtml";
+
     /**
      * @var CurrencyFactory
      */
@@ -33,7 +36,7 @@ class CurrencyBlock extends Template
     /**
      * @return object
      */
-    public function getCurrencyInformation(): object
+    public function getCurrencyInformation(): string
     {
         return $this->CurrencyFactory->create()->getCurrencyResponse();
     }

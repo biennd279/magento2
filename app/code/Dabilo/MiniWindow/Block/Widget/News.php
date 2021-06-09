@@ -1,14 +1,16 @@
 <?php
 
-namespace Dabilo\MiniWindow\Block;
+declare(strict_types=1);
 
+namespace Dabilo\MiniWindow\Block\Widget;
 
-use Dabilo\MiniWindow\Model\News;
-use Dabilo\MiniWindow\Model\NewsFactory;
 use Magento\Framework\View\Element\Template;
+use Magento\Widget\Block\BlockInterface;
 
-class NewsBlock extends Template
+class News extends Template implements BlockInterface
 {
+
+    protected $_template = "widget/news.phtml";
     /**
      * @var NewsFactory
      */

@@ -1,14 +1,17 @@
 <?php
 
-namespace Dabilo\MiniWindow\Block;
+declare(strict_types=1);
 
+namespace Dabilo\MiniWindow\Block\Widget;
 
-use Dabilo\MiniWindow\Model\Weather;
-use Dabilo\MiniWindow\Model\WeatherFactory;
 use Magento\Framework\View\Element\Template;
+use Magento\Widget\Block\BlockInterface;
 
-class WeatherBlock extends Template
+class Weather extends Template implements BlockInterface
 {
+
+    protected $_template = "widget/weather.phtml";
+
     /**
      * @var WeatherFactory
      */

@@ -45,20 +45,20 @@ class Currency
         $this->jsonHelper = $jsonHelper;
     }
 
-    public function getCurrencyResponse()
+    public function getCurrencyResponse(): string
     {
         if (!$this->response) {
-            $this->response = (object)$this->getResponseFromEndPoint();
+            $this->response = $this->getResponseFromEndPoint();
         }
         return $this->response;
     }
 
-    private function getResponseFromEndPoint()
+    private function getResponseFromEndPoint(): string
     {
-        return $this->getResponse()->getContents();
+        return $this->getResponse();
     }
 
-    private function getResponse()
+    private function getResponse(): string
     {
         /** @var Curl $client */
         $client = $this->curlFactory->create();
