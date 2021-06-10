@@ -1,7 +1,7 @@
 <?php
-/** @var WeatherBlock $block */
+/** @var Weather $block */
 
-use Dabilo\MiniWindow\Block\WeatherBlock;
+use Dabilo\MiniWindow\Block\Weather;
 
 ?>
 <?php
@@ -13,21 +13,12 @@ $temp_min = $result->main['temp_min'];
 $temp_max = $result->main['temp_max'];
 $umid = $result->main['humidity'];
 ?>
-<h1 id="label_try"><?php echo $block->getLabel(); ?> </h1>
 
-<button id="weather_button">Show Weather</button>
-<div id="show_weather"></div>
-<script type="text/javascript">
-    require(["jquery"], function ($) {
-        $(document).ready(function () {
-            $('#weather_button').click(function () {
-                var info = '<?php echo "The weather in Hanoi is $main, probably with $description." . '<br>' .
-                    "The temperatutur now is $temp Kelvin, with minimun for today of $temp_min Kelvin and maximun $temp_max Kelvin." . '<br>' .
-                    "The humidity is $umid%"; ?>';
-
-                $('#show_weather').html(info);
-            });
-        });
-    });
-</script>
+<?php if($block->getData('news')): ?>
+    <h2 class='news'><?php echo $block->getData('news'); ?>
+    <?php echo "The weather in Hanoi is $main, probably with $description".'<br>' .
+    "The temperatutur now is $temp degree, with minimun for today of $temp_min degree and maximun $temp_max degree." . '<br>' .
+    "The humidity is $umid%"; ?>
+    </h2>
+<?php endif; ?>
 

@@ -1,22 +1,19 @@
 <?php
-/** @var NewsBlock $block */
+/** @var News $block */
 
-use Dabilo\MiniWindow\Block\NewsBlock;
+use Dabilo\MiniWindow\Block\News;
 
 ?>
 <?php
 $result = $block->getNewsInformation();
 $data = simplexml_load_string($result);
 $items = $data->channel->item;
-?>
-<h1 id="label_try"><?php echo $block->getLabel(); ?> </h1>
 
-<button id="news_button">Show news</button>
-<div id="show_news"></div>
-<script type="text/javascript">
-    require(["jquery"], function ($) {
-        $(document).ready(function () {
-            $('#news_button').click(function () {
+?>
+
+<?php if($block->getData('news')): ?>
+    <h2 class='news'><?php echo $block->getData('news'); ?>
+    </h2>
                 <?php
                 foreach($items as $item)//lap
                 {
@@ -38,8 +35,5 @@ $items = $data->channel->item;
                 <?
                 }
                 ?>
-                $('#show_news').html(info);
-            });
-        });
-    });
-</script>
+<?php endif; ?>
+
