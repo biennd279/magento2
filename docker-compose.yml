@@ -14,10 +14,10 @@ services:
   elasticsearch:
     image: 'elasticsearch:7.12.0'
     environment:
-      ES_JAVA_OPTS: '-Xms256m -Xmx256m'
-      network.bind_host: 0.0.0.0
-      network.host: 0.0.0.0
-      discovery.type: single-node
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+      - network.bind_host=0.0.0.0
+      - network.host=0.0.0.0
+      - discovery.type=single-node
   fpm:
     build:
       context: .

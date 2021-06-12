@@ -50,7 +50,7 @@ class Weather
     public function getWeatherResponse()
     {
         if (!$this->response) {
-            $this->response = (object)$this->getResponseFromEndPoint();
+            $this->response = (object) $this->getResponseFromEndPoint();
         }
         return $this->response;
     }
@@ -60,7 +60,7 @@ class Weather
         return $this->jsonHelper->jsonDecode($this->getResponse());
     }
 
-    private function getResponse()
+    private function getResponse(): string
     {
         /** @var Curl $client */
         $client = $this->curlFactory->create();
