@@ -13,15 +13,15 @@ $rate = $data->Exrate;
 ?>
 
 <?php if($block->getData('currency')): ?>
-    <h2 class='currency'><?php echo $block->getData('currency'); ?>
+    <h2 class='currency'><b><?php echo $block->getData('currency'); ?></b>
     </h2>
-    <table border="1">
+    <table class='currency_table'>
         <tr>
-            <td>Code</td>
-            <td>Currency Name</td>
-            <td>Buy</td>
-            <td>Transfer</td>
-            <td>Sell</td>
+            <th>Code</th>
+            <th>Currency Name</th>
+            <th>Buy</th>
+            <th>Transfer</th>
+            <th>Sell</th>
         </tr>
         <?php
         foreach($rate as $currency) {
@@ -42,3 +42,13 @@ $rate = $data->Exrate;
     </table>
 <?php endif; ?>
 
+<style>
+.currency_table{
+  border-collapse: collapse;
+}
+.currency_table th, td {
+  text-align: left;
+  padding: 8px;
+}
+.currency_table tr:nth-child(even) {background-color: #f2f2f2;}
+</style>
