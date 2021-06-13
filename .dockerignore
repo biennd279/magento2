@@ -132,8 +132,8 @@ fabric.properties
 ### Magento2 template
 /sitemap
 /sitemap.xml
-/pub/sitemap
-/pub/sitemap.xml
+/.docker/pub/sitemap
+/.docker/pub/sitemap.xml
 /app/config_sandbox
 /app/etc/config.php
 /app/etc/env.php
@@ -151,32 +151,32 @@ fabric.properties
 /grunt-config.json
 /dev/tools/grunt/configs/local-themes.js
 
-/pub/media/*.*
-!/pub/media/.htaccess
-/pub/media/attribute/*
-!/pub/media/attribute/.htaccess
-/pub/media/analytics/*
-/pub/media/catalog/*
-!/pub/media/catalog/.htaccess
-/pub/media/customer/*
-!/pub/media/customer/.htaccess
-/pub/media/downloadable/*
-!/pub/media/downloadable/.htaccess
-/pub/media/favicon/*
-/pub/media/import/*
-!/pub/media/import/.htaccess
-/pub/media/logo/*
-/pub/media/theme/*
-/pub/media/theme_customization/*
-!/pub/media/theme_customization/.htaccess
-/pub/media/wysiwyg/*
-!/pub/media/wysiwyg/.htaccess
-/pub/media/tmp/*
-!/pub/media/tmp/.htaccess
-/pub/media/captcha/*
-!/pub/media/captcha/.htaccess
-/pub/static/*
-!/pub/static/.htaccess
+/.docker/pub/media/*.*
+!/.docker/pub/media/.htaccess
+/.docker/pub/media/attribute/*
+!/.docker/pub/media/attribute/.htaccess
+/.docker/pub/media/analytics/*
+/.docker/pub/media/catalog/*
+!/.docker/pub/media/catalog/.htaccess
+/.docker/pub/media/customer/*
+!/.docker/pub/media/customer/.htaccess
+/.docker/pub/media/downloadable/*
+!/.docker/pub/media/downloadable/.htaccess
+/.docker/pub/media/favicon/*
+/.docker/pub/media/import/*
+!/.docker/pub/media/import/.htaccess
+/.docker/pub/media/logo/*
+/.docker/pub/media/theme/*
+/.docker/pub/media/theme_customization/*
+!/.docker/pub/media/theme_customization/.htaccess
+/.docker/pub/media/wysiwyg/*
+!/.docker/pub/media/wysiwyg/.htaccess
+/.docker/pub/media/tmp/*
+!/.docker/pub/media/tmp/.htaccess
+/.docker/pub/media/captcha/*
+!/.docker/pub/media/captcha/.htaccess
+/.docker/pub/static/*
+!/.docker/pub/static/.htaccess
 
 /var/*
 !/var/.htaccess
@@ -191,3 +191,5 @@ fabric.properties
 vendor/*
 generated/*
 
+xdebug/*
+xdebug
